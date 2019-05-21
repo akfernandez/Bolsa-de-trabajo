@@ -24,6 +24,14 @@
 
     </head>
 
+    <?php
+            
+            $ci = get_instance();
+            $ci->load->model("Session_model");
+            $esta_dentro = $ci->Session_model->esta_dentro();
+            $tipo = $ci->Session_model->get_tipo();
+            
+            ?>
     <!-- CABECERA-->
     <body id="page-top">
 
@@ -75,8 +83,9 @@
                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                       </li>-->
+                <?php if (!$esta_dentro) : ?>
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Usuario_controller/login")?>" id="userDropdown" >
+                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Usuario_controller/login") ?>" id="userDropdown" >
 
                         iniciar sesion
                     </a>
@@ -84,12 +93,14 @@
                 </li>
 
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Usuario_controller/registro")?>" id="userDropdown" >
+                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Usuario_controller/registro") ?>" id="userDropdown" >
 
                         registrarse
                     </a>
 
                 </li>
+                
+                <?php endif; ?>
 
 
 
@@ -178,7 +189,7 @@
                     <div class="modal-body">Selecciona "cerrar sesion" para abandonar la aplicación</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                        <a class="btn btn-primary" href="login.html">Cerrar sesion</a>
+                        <a class="btn btn-primary" href="<?php echo site_url("Usuario_controller/cerrar_sesion") ?>">Cerrar sesion</a>
                     </div>
                 </div>
             </div>
@@ -202,6 +213,9 @@
         <!-- Demo scripts for this page-->
         <script src="<?php echo base_url(); ?>assets/js/demo/datatables-demo.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/demo/chart-area-demo.js"></script>
+
+        <script src="<?php echo base_url(); ?>assets/js/util.js"></script>
+
 
     </body>
 
