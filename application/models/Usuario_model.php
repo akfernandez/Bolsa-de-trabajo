@@ -36,13 +36,7 @@ class Usuario_model extends CI_Model {
 
             $this->db->insert('alumno_aptitud', $data);
         }
-
-      $newdata = array(
-            'nombre_usuario' => $array["nombre_usuario"],
-            'pass' => $array["contraseña"],
-            'dentro' => TRUE
-        );
-        $this->session->set_userdata($newdata);
+ 
     }
 
     function cambiarAptitudes($familia_id) {

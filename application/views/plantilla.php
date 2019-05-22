@@ -29,7 +29,7 @@
             $ci = get_instance();
             $ci->load->model("Session_model");
             $esta_dentro = $ci->Session_model->esta_dentro();
-            $tipo = $ci->Session_model->get_tipo();
+            $tipo = $ci->Session_model->get_tipo_usuario();
             
             ?>
     <!-- CABECERA-->
@@ -127,24 +127,36 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="index.html">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
+                        <span>Inicio</span>
                     </a>
                 </li>
+                <a class="dropdown-item" href="<?php echo site_url("Examples/offices_management") ?>">aaaaaaa</a>
+                <?php if($esta_dentro):?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-fw fa-folder"></i>
-                        <span>Pages</span>
+                        <span>Administracion</span>
                     </a>
+                    
+                    <?php if ($tipo!= "a" && $tipo !="e") : ?>
                     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                        <h6 class="dropdown-header">Login Screens:</h6>
-                        <a class="dropdown-item" href="login.html">Login</a>
-                        <a class="dropdown-item" href="register.html">Register</a>
-                        <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Mantenimientos</h6>
+                        <a class="dropdown-item" href="register.html">Alumnos</a>
+                        <a class="dropdown-item" href="forgot-password.html">Aptitudes</a>
+                        
+                         <?php if ($tipo== "d") : ?>
+                        <a class="dropdown-item" href="">Usuarios</a>
+                        <a class="dropdown-item" href="">Empresas</a>
+                        <a class="dropdown-item" href="">Profesores</a>
+                        <a class="dropdown-item" href="">Direccion</a>
+                        <a class="dropdown-item" href="">Familias</a>
+<!--                        <div class="dropdown-divider"></div>
                         <h6 class="dropdown-header">Other Pages:</h6>
                         <a class="dropdown-item" href="404.html">404 Page</a>
-                        <a class="dropdown-item" href="blank.html">Blank Page</a>
+                        <a class="dropdown-item" href="blank.html">Blank Page</a>-->
+                        <?php endif; ?>
                     </div>
+                    <?php endif;?>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="charts.html">
@@ -156,10 +168,12 @@
                         <i class="fas fa-fw fa-table"></i>
                         <span>Tables</span></a>
                 </li>
+                <?php endif;?>
             </ul>
             <!--FIN BARRA LATERAL-->
-
+            <div>
             <?= $cuerpo ?>
+            </div>
             <!-- /.content-wrapper -->
             <footer class="sticky-footer">
                 <div class="container my-auto">
