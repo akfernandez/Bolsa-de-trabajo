@@ -1,6 +1,6 @@
 <?php
 
-class Usuario_controller extends CI_Controller {
+class Alumno_controller extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -17,50 +17,49 @@ class Usuario_controller extends CI_Controller {
         $this->Session_model->cerrar_sesion();
         redirect("Inicio");
     }
-
-    public function login() {
-
-        $config = $this->validacionesInicioSesion();
-
-        $this->form_validation->set_rules($config);
-
-        if ($this->form_validation->run() == FALSE) {
+    
+    public function crud_alumno() {
+        $result = $this->Usuario_model->get_alumnos();
+//                $array_persona["usuario_id"] = $query->row()->id_usuario;
+        $datos = array();
 
 
-            $this->load->view('plantilla', [
-                "cuerpo" => $this->load->view("login", "", TRUE
-                )
-            ]);
-        } else {
+        foreach ($result as $key => $value) {
 
-            if ($this->Session_model->inicioSesion($this->input->post('username'), $this->input->post('pass'))) {
-                redirect("inicio");
-            } else {
-                $this->load->view('plantilla', [
-                    "cuerpo" => $this->load->view("login", "", TRUE
-                    )
-                ]);
-            }
+
+            $datos[] = array(
+                'id' => $value["id_alumno"],
+                'nombre' => $value["nombre"],
+                'dni' => $value["dni"],
+                'telefono' => $value["telefono"]
+            );
         }
+
+
+        $this->load->view('plantilla', [
+            "cuerpo" => $this->load->view("crud_alumnos", ["datos" => $datos], TRUE
+            )
+        ]);
     }
 
-    public function registro() {
+    public function mantenimientoAlumno($accion, $id = 0) {
+
 
         $config = $this->validacionesRegistro();
 
         $this->form_validation->set_rules($config);
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE && $accion!="borrar") {
 
-            $datos = $this->Usuario_model->get_datos_alumnos_by_id(0);
+            $datos = $this->Usuario_model->get_datos_alumnos_by_id($id);
 
-            
-            $datos = $this->setearDatosPost($datos);
-
+            if ($this->input->post('guardar') == "guardar") {
+                $datos = $this->setearDatosPost($datos);
+            }
 
             //var_dump(get_object_vars(json_decode($this->input->post('aptitudes'))));
             $this->load->view('plantilla', [
-                "cuerpo" => $this->load->view("registro_alumno", ['familias' => $this->Usuario_model->get_lista_familias(),
-                    'datos' => $datos, 'accion'=>""], TRUE
+                "cuerpo" => $this->load->view("formulario_alumno", ['familias' => $this->Usuario_model->get_lista_familias(),
+                    'datos' => $datos, 'accion' => $accion], TRUE
                 )
             ]);
         } else {
@@ -82,10 +81,46 @@ class Usuario_controller extends CI_Controller {
 
             $aptitudes = json_decode($this->input->post('aptitudes'));
 
-            $this->Usuario_model->registrar_usuario($usuario_data, $alumno_data, $aptitudes);
-            $this->Session_model->add_usuario_sesion($usuario_data);
-            redirect("inicio");
+            switch ($accion) {
+                case "registro":
+                case "crear":
+
+                    $this->crear($usuario_data, $alumno_data, $aptitudes);
+                    if ($accion == "registro") {
+                        $this->Session_model->add_usuario_sesion($usuario_data);
+                        redirect("inicio");
+                    }
+
+                    break;
+
+                case "editar":
+                    $this->editar($id, $usuario_data, $alumno_data, $aptitudes);
+                    
+                    redirect("Alumno_controller/mantenimientoAlumno/ver/".$id);
+
+                    break;
+                
+                case "borrar":
+                    $this->borrar($id);
+                    
+                    redirect("Alumno_controller/crud_alumno");
+
+                    break;
+
+            }
         }
+    }
+
+    public function editar($id, $usuario_data, $alumno_data, $aptitudes) {
+        $this->Usuario_model->modificarAlumno($id, $usuario_data, $alumno_data, $aptitudes);
+    }
+
+    public function borrar($id) {
+        $this->Usuario_model->borrar_alumno($id);
+    }
+
+    public function crear($usuario_data, $alumno_data, $aptitudes) {
+        $this->Usuario_model->registrar_usuario($usuario_data, $alumno_data, $aptitudes);
     }
 
     private function setearDatosPost($datos) {

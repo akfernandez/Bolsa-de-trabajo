@@ -16,6 +16,18 @@ class Ajax_controller extends CI_Controller {
         echo $this->Usuario_model->cambiarAptitudes($this->input->post("id_familia"));
        
     }
+    
+    public function cargarAptitudes() {
+
+        echo $this->Usuario_model->get_aptitudes();
+       
+    }
+    
+    
+    public function cargarAptitudesChecked(){
+        
+        echo $this->Usuario_model->getAptitudesChecked($this->input->post("id"));
+    }
 
 
 }

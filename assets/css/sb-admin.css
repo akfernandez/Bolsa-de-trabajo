@@ -6039,6 +6039,36 @@ a.close.disabled {
   pointer-events: none;
 }
 
+.borraraptitud{
+    font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: red;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.borraraptitud:hover {
+  color: #000;
+  text-decoration: none;
+}
+.borraraptitud:not(:disabled):not(.disabled):hover, .borraraptitud:not(:disabled):not(.disabled):focus {
+  opacity: .75;
+}
+
+button.borraraptitud {
+  padding: 0;
+  background-color: transparent;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+a.borraraptitud.disabled {
+  pointer-events: none;
+}
+
 .toast {
   max-width: 350px;
   overflow: hidden;

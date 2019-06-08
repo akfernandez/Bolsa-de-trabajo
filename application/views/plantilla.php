@@ -93,7 +93,7 @@
                 </li>
 
                 <li class="nav-item dropdown no-arrow">
-                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Usuario_controller/registro") ?>" id="userDropdown" >
+                    <a class="nav-link dropdown-toggle" href="<?php echo site_url("Alumno_controller/mantenimientoAlumno/registro") ?>" id="userDropdown" >
 
                         registrarse
                     </a>
@@ -125,31 +125,34 @@
             <!-- BARRA LATERAL -->
             <ul class="sidebar navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Inicio</span>
                     </a>
                 </li>
-                <a class="dropdown-item" href="<?php echo site_url("Examples/offices_management") ?>">aaaaaaa</a>
+                <a class="dropdown-item" href="<?php echo site_url("Alumno_controller/crud_alumno") ?>">aaaaaaa</a>
                 <?php if($esta_dentro):?>
+                <?php if ($tipo != "a" && $tipo !="e") : ?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-fw fa-folder"></i>
                         <span>Administracion</span>
                     </a>
                     
-                    <?php if ($tipo!= "a" && $tipo !="e") : ?>
+                    
                     <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                         <h6 class="dropdown-header">Mantenimientos</h6>
-                        <a class="dropdown-item" href="register.html">Alumnos</a>
-                        <a class="dropdown-item" href="forgot-password.html">Aptitudes</a>
+                        <a class="dropdown-item" href="<?= site_url("Alumno_controller/crud_alumno") ?>">Alumnos</a>
+                        <a class="dropdown-item" href="<?= site_url("Aptitud_controller/crud_aptitud") ?>">Aptitudes</a>
                         
                          <?php if ($tipo== "d") : ?>
-                        <a class="dropdown-item" href="">Usuarios</a>
-                        <a class="dropdown-item" href="">Empresas</a>
-                        <a class="dropdown-item" href="">Profesores</a>
-                        <a class="dropdown-item" href="">Direccion</a>
-                        <a class="dropdown-item" href="">Familias</a>
+                        
+                        <a class="dropdown-item" href="<?= site_url("Empresa_controller/crud_empresa") ?>">Empresas</a>
+                        <a class="dropdown-item" href="<?= site_url("Profesor_controller/crud_profesor") ?>">Profesores</a>
+                        <a class="dropdown-item" href="<?= site_url("Direccion_controller/crud_direccion") ?>">Direccion</a>
+                        <a class="dropdown-item" href="<?= site_url("Familia_controller/crud_familia") ?>">Familias</a>
+                        
+                        
 <!--                        <div class="dropdown-divider"></div>
                         <h6 class="dropdown-header">Other Pages:</h6>
                         <a class="dropdown-item" href="404.html">404 Page</a>
@@ -171,9 +174,9 @@
                 <?php endif;?>
             </ul>
             <!--FIN BARRA LATERAL-->
-            <div>
+           
             <?= $cuerpo ?>
-            </div>
+           
             <!-- /.content-wrapper -->
             <footer class="sticky-footer">
                 <div class="container my-auto">
@@ -227,8 +230,9 @@
         <!-- Demo scripts for this page-->
         <script src="<?php echo base_url(); ?>assets/js/demo/datatables-demo.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/demo/chart-area-demo.js"></script>
-
+        <script src="<?php echo base_url(); ?>assets/js/renderDOM.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/util.js"></script>
+       
 
 
     </body>
